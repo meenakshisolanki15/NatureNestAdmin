@@ -4,13 +4,15 @@ import Header from './Components/Header';
 import Sidebar from './Components/Sidebar';
 import Dashboard from './Pages/Dashboard';
 import { createContext, useState } from 'react';
+import Login from './Pages/Login';
+import SignUp from './Pages/SignUp';
 
 
 const MyContext = createContext();
 function App() {
 
   const [isSidebarOpen, setisSidebarOpen] = useState(true);
- 
+ const [isLogin, setIsLogin] = useState(false);
 
 
 
@@ -34,11 +36,32 @@ function App() {
       </>
       ),
     },
+
+    {
+      path: "/login",
+      exact: true,
+      element: (
+        <>
+        <Login/>
+        </>
+      ),
+    },
+    {
+      path: "/signUp",
+      exact: true,
+      element: (
+        <>
+        <SignUp/>
+        </>
+      ),
+    },
   ]);
 
   const values = {
     isSidebarOpen,
     setisSidebarOpen,
+    isLogin,
+    setIsLogin,
   };
 
 

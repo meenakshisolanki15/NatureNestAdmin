@@ -22,50 +22,50 @@ const DashboardBoxes = () => {
             >
 
                 <SwiperSlide>
-                    <div className='box !p-5 bg-white curdor-pointer hover:bg-[#f1f1f1] rounded-md border border-[rgba(0,0,0,0.1)] flex
+                    <div className='box !p-5 bg-[#3872fa] curdor-pointer  rounded-md border border-[rgba(0,0,0,0.1)] flex
                     items-center gap-4'>
-                        <AiOutlineGift className='text-[30px] text-[#3872fa]'/>
+                        <AiOutlineGift className='text-[30px] text-white'/>
                        <div className='info w-[70%] '>
-                        <h3>New Orders</h3>
-                        <b>1,390</b>
+                        <h3 className='text-white'>New Orders</h3>
+                        <b className='text-white'>1,390</b>
                         </div> 
-                        <IoStatsChartSharp className='text-[40px] text-[#3872fa]'/>
+                        <IoStatsChartSharp className='text-[40px] text-white'/>
                     </div>
 
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className='box !p-5 bg-white curdor-pointer hover:bg-[#f1f1f1] rounded-md border border-[rgba(0,0,0,0.1)] flex
+                    <div className='box !p-5 bg-[#10b981] curdor-pointer rounded-md border border-[rgba(0,0,0,0.1)] flex
                     items-center gap-4'>
-                        <AiTwotonePieChart className='text-[30px] text-[#10b981]'/>
+                        <AiTwotonePieChart className='text-[30px] text-white'/>
                        <div className='info w-[70%] '>
-                        <h3>Sales</h3>
-                        <b>1,390</b>
+                        <h3 className='text-white'>Sales</h3>
+                        <b className='text-white'>1,390</b>
                         </div> 
-                        <IoStatsChartSharp className='text-[40px] text-[#10b981]'/>
+                        <IoStatsChartSharp className='text-[40px] text-white'/>
                     </div>
 
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className='box !p-5 bg-white curdor-pointer hover:bg-[#f1f1f1] rounded-md border border-[rgba(0,0,0,0.1)] flex
+                    <div className='box !p-5 bg-[#7928ca] curdor-pointer rounded-md border border-[rgba(0,0,0,0.1)] flex
                     items-center gap-4'>
-                        <RiBankFill className='text-[30px] text-[#7928ca]'/>
+                        <RiBankFill className='text-[30px] text-white'/>
                        <div className='info w-[70%] '>
-                        <h3>Revenue</h3>
-                        <b>1,390</b>
+                        <h3 className='text-white'>Revenue</h3>
+                        <b className='text-white'>1,390</b>
                         </div> 
-                        <IoStatsChartSharp className='text-[40px] text-[#7928ca]'/>
+                        <IoStatsChartSharp className='text-[40px] text-white'/>
                     </div>
 
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className='box !p-5  bg-white curdor-pointer hover:bg-[#f1f1f1] rounded-md border border-[rgba(0,0,0,0.1)] flex
+                    <div className='box !p-5  bg-[#312be1d8] curdor-pointer  rounded-md border border-[rgba(0,0,0,0.1)] flex
                     items-center gap-4'>
-                        <TbBrandProducthunt className='text-[30px] text-[#312be1d8]'/>
+                        <TbBrandProducthunt className='text-[30px] text-white'/>
                        <div className='info w-[70%] '>
-                        <h3>Total Products</h3>
-                        <b>1,390</b>
+                        <h3 className='text-white'>Total Products</h3>
+                        <b className='text-white'>1,390</b>
                         </div> 
-                        <IoStatsChartSharp className='text-[40px] text-[#312be1d8]'/>
+                        <IoStatsChartSharp className='text-[40px] text-white'/>
                     </div>
 
                 </SwiperSlide>
