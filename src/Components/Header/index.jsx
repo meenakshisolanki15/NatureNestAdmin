@@ -111,7 +111,7 @@ const Header = () => {
 
 
                 <div  className='info'>
-                  <h3 className='text-[15px] font-[500] leading-5'>Shiva Sinha</h3>
+                  <h3 className='text-[15px] font-[500] leading-5'>Manohar Singh</h3>
                   <p className='text-[12px] font-[400] opacity-70'>admin-01@cme.com</p>
                 </div>
               </div>
