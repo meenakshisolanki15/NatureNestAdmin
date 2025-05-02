@@ -21,3 +21,20 @@ a.active button{background: #e2e1e1 !important;}
 .MuiButton-icon svg{font-size: 30px !important;}
 
 .css-rizt0-MuiTypography-root{font-size: 14px !important;}
+
+.MuiAppBar-colorPrimary{background: #f1fff1 !important;}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+
+.otpBox input{border: 1px solid rgba(0,0,0,0.3) !important;outline: none !important;
+    border-radius: 4px !important; }
+    .otpBox input:focus{border: 1px solid rgba(0,0,0,0.7) !important;}
+    .otpPage .container{height: 90vh; display: flex;}
+    

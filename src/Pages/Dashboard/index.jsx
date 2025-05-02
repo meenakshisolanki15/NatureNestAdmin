@@ -1,4 +1,4 @@
-import React, { useState, PureComponent } from 'react'
+import React, { useState, PureComponent, useContext } from 'react'
 import DashboardBoxes from '../../Components/DashboardBoxes'
 import { Button } from '@mui/material';
 import { FaPlus } from "react-icons/fa6";
@@ -16,6 +16,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer }
   from 'recharts';
+import { MyContext } from '../../App';
 
 
 const Dashboard = () => {
@@ -112,7 +113,7 @@ const Dashboard = () => {
     ]
   );
   
-    
+   const context = useContext(MyContext); 
 
   const handleChangeCatFilter = (event) => {
     setcategoryFliterVal(event.target.value);
@@ -127,7 +128,10 @@ const Dashboard = () => {
           </h1>
           <p> Here's What happening on your store today. See the statistics at once.</p>
           <br />
-          <Button className='btn-blue !capitalize'><FaPlus />Add Product</Button>
+          <Button className='btn-blue !capitalize' onClick={()=>context.setIsOpenFullScreenPanel({
+            open: true,
+            model: "Add Product"
+          })}><FaPlus />Add Product</Button>
         </div>
 
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHOCzaEM17rj4LhXRx3nOezr76b-3BZ_WN_A&s"
@@ -168,7 +172,10 @@ const Dashboard = () => {
           <div className='col w-[25%] ml-auto flex items-center gap-3'>
             <Button className='btn !bg-green-600 !text-white '>
               Export</Button>
-            <Button className='btn !bg-green-600 !text-white '>
+            <Button className='btn !bg-green-600 !text-white 'onClick={()=>context.setIsOpenFullScreenPanel({
+            open: true,
+            model: "Add Product"
+          })}>
               Add product</Button>
           </div>
 

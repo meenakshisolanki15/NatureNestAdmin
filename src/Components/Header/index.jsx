@@ -10,8 +10,9 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { FaRegUser } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
-import {MyContext} from '../../App';
-import { AiOutlineMenuUnfold } from "react-icons/ai";
+import { MyContext } from '../../App';
+import { Link } from 'react-router-dom';
+import { fetchDataFromApi } from '../../utils/api';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -26,6 +27,7 @@ const Header = () => {
   const [anchorMyAcc, setAnchorMyAcc] = useState(null);
   const openMyAcc = Boolean(anchorMyAcc);
 
+  const context = useContext(MyContext);
 
   const handleClickMyAcc = (event) => {
     setAnchorMyAcc(event.currentTarget);
@@ -34,17 +36,30 @@ const Header = () => {
     setAnchorMyAcc(null);
   };
 
-  const context = useContext(MyContext);
+  const logout = () => {
+    setAnchorMyAcc(null);
 
+    fetchDataFromApi(`/api/user/logout?token=${localStorage.getItem('accesstoken')}`,
+      { withCredentials: true }).then((res) => {
+        console.log(res);
+        if (res?.error === false) {
+          context.setIsLogin(false);
+          localStorage.removeItem("accesstoken");
+          localStorage.removeItem("refreshtoken");
+          history("/");
+        }
+
+      })
+  }
 
   return (
     <header className={`w-full h-[auto] !py-2 ${context.isSidebarOpen === true ? '!pl-64' : '!pl-5'}
      shadow-sm !pr-7 bg-[#fff] flex items-center justify-between transition-all`}>
       <div className='part1'>
         <Button className='!w-[40px] !h-[40px] !rounded-full !min-w-[40px] !text-[rgba(0,0,0,0.8)]'
-         onClick={()=>context.setisSidebarOpen(!context.isSidebarOpen)}>
+          onClick={() => context.setisSidebarOpen(!context.isSidebarOpen)}>
 
-         
+
           <RiMenu2Line className='text-[18px] text-[rgba(0,0,0,0.8)]' />
         </Button>
       </div>
@@ -58,78 +73,99 @@ const Header = () => {
         </IconButton>
 
 
-        <div className='relative'>
-          <div className='rounded-full w-[30px] h-[30px] overflow-hidden cursor-pointer'
-            onClick={handleClickMyAcc}>
-            <img src="https://play-lh.googleusercontent.com/vco-LT_M58j9DIAxlS1Cv9uvzbRhB6cYIZJS7ocZksWRqoEPat_QXb6fVFi77lciJZQ=w526-h296-rw"
-              className='w-full h-full object-cover' />
-          </div>
-          <Menu
-            anchorEl={anchorMyAcc}
-            id="account-menu"
-            open={openMyAcc}
-            onClose={handleCloseMyAcc}
-            onClick={handleCloseMyAcc}
-            slotProps={{
-              paper: {
-                elevation: 0,
-                sx: {
-                  overflow: 'visible',
-                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                  mt: 1.5,
-                  '& .MuiAvatar-root': {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  '&::before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0,
-                  },
-                },
-              },
-            }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          >
-            <MenuItem onClick={handleCloseMyAcc} className='!bg-white '>
-              <div className='flex items-center gap-3'>
+        {
+          context.isLogin === false ?
+            (<li className='list-none'>
+              <Link to='/login' className='link transition text-[15px] font-[500]'>
+                <Button className='btn-org btn-lg w-full flex'>Login
+                </Button>
+              </Link>
+            </li>
+            )
+
+            :
+            (
+              <div className='relative'>
                 <div className='rounded-full w-[30px] h-[30px] overflow-hidden cursor-pointer'
-                >
+                  onClick={handleClickMyAcc}>
                   <img src="https://play-lh.googleusercontent.com/vco-LT_M58j9DIAxlS1Cv9uvzbRhB6cYIZJS7ocZksWRqoEPat_QXb6fVFi77lciJZQ=w526-h296-rw"
                     className='w-full h-full object-cover' />
                 </div>
+                <Menu
+                  anchorEl={anchorMyAcc}
+                  id="account-menu"
+                  open={openMyAcc}
+                  onClose={handleCloseMyAcc}
+                  onClick={handleCloseMyAcc}
+                  slotProps={{
+                    paper: {
+                      elevation: 0,
+                      sx: {
+                        overflow: 'visible',
+                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                        mt: 1.5,
+                        '& .MuiAvatar-root': {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        '&::before': {
+                          content: '""',
+                          display: 'block',
+                          position: 'absolute',
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: 'background.paper',
+                          transform: 'translateY(-50%) rotate(45deg)',
+                          zIndex: 0,
+                        },
+                      },
+                    },
+                  }}
+                  transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                  anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                >
 
 
-                <div  className='info'>
-                  <h3 className='text-[15px] font-[500] leading-5'>Manohar Singh</h3>
-                  <p className='text-[12px] font-[400] opacity-70'>admin-01@cme.com</p>
-                </div>
+
+
+                  <MenuItem onClick={handleCloseMyAcc} className='!bg-white '>
+                    <div className='flex items-center gap-3'>
+                      <div className='rounded-full w-[30px] h-[30px] overflow-hidden cursor-pointer'
+                      >
+                        <img src="https://play-lh.googleusercontent.com/vco-LT_M58j9DIAxlS1Cv9uvzbRhB6cYIZJS7ocZksWRqoEPat_QXb6fVFi77lciJZQ=w526-h296-rw"
+                          className='w-full h-full object-cover' />
+                      </div>
+
+
+
+                      <div className='info'>
+                        <h3 className='text-[15px] font-[500] leading-5'>Manohar Singh</h3>
+                        <p className='text-[12px] font-[400] opacity-70'>admin-01@cme.com</p>
+                      </div>
+                    </div>
+                  </MenuItem>
+
+
+                  <Divider />
+
+                  {/* <MenuItem onClick={handleCloseMyAcc} className='flex items-center gap-3'>
+                    <FaRegUser className='text-[16px]' /> <span className='text-[14px]'>Profile</span>
+                  </MenuItem> */}
+
+                  <MenuItem onClick={logout} className='flex items-center gap-3'>
+                    <IoMdLogOut className='text-[18px]' /> <span className='text-[14px]'>LogOut</span>
+                  </MenuItem>
+
+
+
+                </Menu>
               </div>
-            </MenuItem>
-            <Divider/>
-
-            <MenuItem onClick={handleCloseMyAcc} className='flex items-center gap-3'>
-            <FaRegUser className='text-[16px]'/> <span className='text-[14px]'>Profile</span>
-            </MenuItem>
-            
-            <MenuItem onClick={handleCloseMyAcc} className='flex items-center gap-3'>
-            <IoMdLogOut className='text-[18px]'/> <span className='text-[14px]'>Sign Out</span>
-            </MenuItem>
-
-
-
-          </Menu>
-        </div>
+            )
+        }
       </div>
     </header>
   );
