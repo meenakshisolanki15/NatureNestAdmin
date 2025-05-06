@@ -24,6 +24,7 @@ import AddCategory from './Pages/Category/addCategory';
 import Users from './Pages/Users';
 import Orders from './Pages/Orders';
 import Verify from './Pages/Verify';
+import EditCategory from './Pages/Category/editCategory';
 
 
 
@@ -38,10 +39,12 @@ function App() {
   const [isSidebarOpen, setisSidebarOpen] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
 
+  const [catData, setCatData] = useState([]);
+
   const [isOpenFullScreenPanel, setIsOpenFullScreenPanel] = useState(
     {
       open: false,
-      model: ''
+      id: ""
     }
   );
 
@@ -213,6 +216,9 @@ function App() {
     isOpenFullScreenPanel,
     setIsOpenFullScreenPanel,
     openAlertBox,
+    catData,
+    setCatData,
+    
   };
 
 
@@ -254,6 +260,9 @@ function App() {
           }
            {
             isOpenFullScreenPanel?.model === "Add New Category" && <AddCategory/>
+          }
+           {
+            isOpenFullScreenPanel?.model === "Edit Category" && <EditCategory/>
           }
         </Dialog>
         <Toaster/>
