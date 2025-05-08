@@ -1,23 +1,35 @@
 import { Button } from '@mui/material';
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaPlus } from "react-icons/fa";
 import Checkbox from '@mui/material/Checkbox';
 import { Link } from 'react-router-dom';
-import Progress from '../../Components/Progress';
 import { RiEditLine } from "react-icons/ri";
 import { FaRegEye } from "react-icons/fa6";
-import { FaRegTrashCan } from "react-icons/fa6";
 import SearchBox from '../../Components/SearchBox';
 import { MyContext } from '../../App';
+import { fetchDataFromApi } from '../../utils/api';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 
 
 const Products = () => {
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-    
+    const [productData, setProductData] = useState([]);
     const context = useContext(MyContext);
 
+    useEffect(() => {
+        getProducts();
+    }, [context?.isOpenFullScreenPanel])
 
+    const getProducts = async () => {
+        fetchDataFromApi("/api/product/getAllProducts").then((res) => {
+            console.log(res);
+            if (res?.error === false) {
+                setProductData(res?.data)
+            }
+        })
+    }
 
 
     return (
@@ -26,10 +38,10 @@ const Products = () => {
             <div className='card bg-white shadow-md rouned-md !p-5 flex items-center justify-between'>
                 <h1 className='font-[700] text-[20px] text-gray-800'> Products </h1>
                 <Button className='btn-blue btn-sm !ml-auto'
-                 onClick={()=>context.setIsOpenFullScreenPanel({
-                    open: true,
-                    model:'Add Product'
-                 })}>
+                    onClick={() => context.setIsOpenFullScreenPanel({
+                        open: true,
+                        model: 'Add Product'
+                    })}>
                     <FaPlus className='text-white text-[20px]' />Add Product
                 </Button>
             </div>
@@ -48,394 +60,105 @@ const Products = () => {
                                         <Checkbox {...label} />
                                     </div>
                                 </th>
-                                <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
+                                <th width={100} scope="col" className="!px-6 !py-3 whitespace-nowrap text-[14px]">
                                     Product
                                 </th>
-                                <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
+                                <th width={100} scope="col" className="!px-6 !py-3 whitespace-nowrap text-[14px]">
                                     Category
                                 </th>
-                                <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
-                                    Sub Category
-                                </th>
 
-                                <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
+
+                                <th width={100} scope="col" className="!px-6 !py-3 whitespace-nowrap text-[14px]">
                                     Price
                                 </th>
-                                <th scope="col" className="!px-6 !py-3 whitespace-nowrap ">
-                                    Sales
-                                </th>
-                                <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
+
+                                <th width={100} scope="col" className="!px-6 !py-3 whitespace-nowrap text-[14px]">
                                     Action
                                 </th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50
-               even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200'>
-                                <td className='!px-6 !py-2 !pr-2'>
-                                    <div className='w-[60px]'>
-                                        <Checkbox {...label} />
-                                    </div>
-                                </td>
+                            {
+                                productData?.length !== 0 && productData?.map((product, index) => {
+                                    return (
+                                        <tr key={index}
+                                            className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50
+                                        even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200'>
+                                            <td className='!px-6 !py-2 !pr-2'>
+                                                <div className='w-[60px]'>
+                                                    <Checkbox {...label} />
+                                                </div>
+                                            </td>
 
-                                <td className='!px-0 !py-2'>
-                                    <div className='flex items-center gap-4 w-[300px]'>
-                                        <div className='img w-[65px] h-[65px] rounded-md overflow-hidden group'>
-                                            <Link to='/product/4343'>
-                                                <img src="https://media.istockphoto.com/id/177537480/photo/gold-wheat-field-and-blue-sky.jpg?s=612x612&w=0&k=20&c=CAxLzTeCt4qBn7fifuoOh70ycoHr9w7FyeNVzkde_IM="
-                                                    className='w-full group-hover:scale-105 transition-all' />
-                                            </Link>
-                                        </div>
-
-
-                                        <div className='info w-[75%]'>
-                                            <h3 className='font-[600] text-[12px] leading-4 hover:text-[#3872fa]'>
-                                                <Link to='/product/4343'>
-                                                    Wheat Plant Stock Photos, Pictures & Images
-                                                </Link>
-                                            </h3>
-
-                                            <span className='text-[12px]'> Wheat </span>
+                                            <td width={100} className='!px-0 !py-2'>
+                                                <div className='flex items-center gap-4 w-[300px]'>
+                                                    <div className='img w-full h-full rounded-md overflow-hidden group'>
+                                                       
+                                                            <LazyLoadImage
+                                                                alt={"image"}
+                                                                efftect="blur"
+                                                                className='w-full group-hover:scale-105 transition-all'
+                                                                src={product?.images[0]}
+                                                            />
+                                                       
+                                                    </div>
 
 
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td className='!px-6 !py-2'>
-                                    Millets
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    Barnyard Millet
-                                </td>
-
-                                <td className='!px-6 !py-2'>
-                                    <div className='flex  gap-1 flex-col'>
-                                        <span className='oldPrice line-through leading-3text-gray-500 text-[15px] font-[500]'>
-                                            ₹500</span>
-                                        <span className='Price text-[#ff5252] text-[14px] font-[600]'>
-                                            ₹300</span>
-                                    </div>
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    <p className='text-[14px]'>
-                                        <span className='font-[600]'>235</span>sale</p>
-                                    <Progress value={40} type="warning" />
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    <div className='flex items-center gap-1'>
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <RiEditLine className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <FaRegEye className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <FaRegTrashCan className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-                                    </div>
-
-                                </td>
-                            </tr>
-
-                            <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50
-               even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200'>
-                                <td className='!px-6 !py-2 !pr-2'>
-                                    <div className='w-[60px]'>
-                                        <Checkbox {...label} />
-                                    </div>
-                                </td>
-
-                                <td className='!px-0 !py-2'>
-                                    <div className='flex items-center gap-4 w-[300px]'>
-                                        <div className='img w-[65px] h-[65px] rounded-md overflow-hidden group'>
-                                            <Link to='/product/4343'>
-                                                <img src="https://media.istockphoto.com/id/177537480/photo/gold-wheat-field-and-blue-sky.jpg?s=612x612&w=0&k=20&c=CAxLzTeCt4qBn7fifuoOh70ycoHr9w7FyeNVzkde_IM="
-                                                    className='w-full group-hover:scale-105 transition-all' />
-                                            </Link>
-                                        </div>
+                                                    <div className='info w-[75%]'>
+                                                        <h3 className='font-[600] text-[16px] leading-4 hover:text-[#3872fa]'>
+                                                            <Link to={`/product/${product?._id}`}>
+                                                                {product?.name}
+                                                            </Link>
+                                                        </h3>
 
 
-                                        <div className='info w-[75%]'>
-                                            <h3 className='font-[600] text-[12px] leading-4 hover:text-[#3872fa]'>
-                                                <Link to='/product/4343'>
-                                                    Wheat Plant Stock Photos, Pictures & Images
-                                                </Link>
-                                            </h3>
-
-                                            <span className='text-[12px]'> Wheat </span>
 
 
-                                        </div>
-                                    </div>
-                                </td>
+                                                    </div>
+                                                </div>
+                                            </td>
 
-                                <td className='!px-6 !py-2'>
-                                    Millets
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    Barnyard Millet
-                                </td>
+                                            <td width={100} className='!px-6 !py-2 text-black font-[500] text-[14px] '>
+                                                {product?.catName}
+                                            </td>
 
-                                <td className='!px-6 !py-2'>
-                                    <div className='flex  gap-1 flex-col'>
-                                        <span className='oldPrice line-through leading-3text-gray-500 text-[15px] font-[500]'>
-                                            ₹500</span>
-                                        <span className='Price text-[#ff5252] text-[14px] font-[600]'>
-                                            ₹300</span>
-                                    </div>
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    <p className='text-[14px]'>
-                                        <span className='font-[600]'>235</span>sale</p>
-                                    <Progress value={40} type="warning" />
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    <div className='flex items-center gap-1'>
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <RiEditLine className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
+                                            <td width={100} className='!px-6 !py-2'>
+                                                <div className='flex  gap-1 flex-col'>
+                                                    <span className='oldPrice line-through leading-3text-gray-500 text-[15px] font-[500]'>
+                                                        &#x20b9;{product?.price}</span>
+                                                    <span className='Price text-[#ff5252] text-[14px] font-[600]'>
+                                                        &#x20b9;{product?.oldPrice}</span>
+                                                </div>
+                                            </td>
 
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <FaRegEye className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
+                                            <td width={100} className='!px-6 !py-2'>
+                                                <div className='flex items-center gap-1'>
+                                                    <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
+                                           !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'
+                                                        onClick={() => context.setIsOpenFullScreenPanel({
+                                                            open: true,
+                                                            model: 'Edit Product',
+                                                            id: product?._id
+                                                        })}>
+                                                        <RiEditLine className='text-[rgba(0,0,0,0.7)] text-[20px]' />
+                                                    </Button>
 
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <FaRegTrashCan className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-                                    </div>
-
-                                </td>
-                            </tr>
-                            <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50
-               even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200'>
-                                <td className='!px-6 !py-2 !pr-2'>
-                                    <div className='w-[60px]'>
-                                        <Checkbox {...label} />
-                                    </div>
-                                </td>
-
-                                <td className='!px-0 !py-2'>
-                                    <div className='flex items-center gap-4 w-[300px]'>
-                                        <div className='img w-[65px] h-[65px] rounded-md overflow-hidden group'>
-                                            <Link to='/product/4343'>
-                                                <img src="https://media.istockphoto.com/id/177537480/photo/gold-wheat-field-and-blue-sky.jpg?s=612x612&w=0&k=20&c=CAxLzTeCt4qBn7fifuoOh70ycoHr9w7FyeNVzkde_IM="
-                                                    className='w-full group-hover:scale-105 transition-all' />
-                                            </Link>
-                                        </div>
+                                                    <Link to={`/product/${product?._id}`}>
+                                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
+                                                            !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
+                                                            <FaRegEye className='text-[rgba(0,0,0,0.7)] text-[20px]' />
+                                                        </Button>
+                                                    </Link>
 
 
-                                        <div className='info w-[75%]'>
-                                            <h3 className='font-[600] text-[12px] leading-4 hover:text-[#3872fa]'>
-                                                <Link to='/product/4343'>
-                                                    Wheat Plant Stock Photos, Pictures & Images
-                                                </Link>
-                                            </h3>
+                                                </div>
 
-                                            <span className='text-[12px]'> Wheat </span>
-
-
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td className='!px-6 !py-2'>
-                                    Millets
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    Barnyard Millet
-                                </td>
-
-                                <td className='!px-6 !py-2'>
-                                    <div className='flex  gap-1 flex-col'>
-                                        <span className='oldPrice line-through leading-3text-gray-500 text-[15px] font-[500]'>
-                                            ₹500</span>
-                                        <span className='Price text-[#ff5252] text-[14px] font-[600]'>
-                                            ₹300</span>
-                                    </div>
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    <p className='text-[14px]'>
-                                        <span className='font-[600]'>235</span>sale</p>
-                                    <Progress value={40} type="warning" />
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    <div className='flex items-center gap-1'>
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <RiEditLine className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <FaRegEye className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <FaRegTrashCan className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-                                    </div>
-
-                                </td>
-                            </tr>
-
-                            <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50
-               even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200'>
-                                <td className='!px-6 !py-2 !pr-2'>
-                                    <div className='w-[60px]'>
-                                        <Checkbox {...label} />
-                                    </div>
-                                </td>
-
-                                <td className='!px-0 !py-2'>
-                                    <div className='flex items-center gap-4 w-[300px]'>
-                                        <div className='img w-[65px] h-[65px] rounded-md overflow-hidden group'>
-                                            <Link to='/product/4343'>
-                                                <img src="https://media.istockphoto.com/id/177537480/photo/gold-wheat-field-and-blue-sky.jpg?s=612x612&w=0&k=20&c=CAxLzTeCt4qBn7fifuoOh70ycoHr9w7FyeNVzkde_IM="
-                                                    className='w-full group-hover:scale-105 transition-all' />
-                                            </Link>
-                                        </div>
-
-
-                                        <div className='info w-[75%]'>
-                                            <h3 className='font-[600] text-[12px] leading-4 hover:text-[#3872fa]'>
-                                                <Link to='/product/4343'>
-                                                    Wheat Plant Stock Photos, Pictures & Images
-                                                </Link>
-                                            </h3>
-
-                                            <span className='text-[12px]'> Wheat </span>
-
-
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td className='!px-6 !py-2'>
-                                    Millets
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    Barnyard Millet
-                                </td>
-
-                                <td className='!px-6 !py-2'>
-                                    <div className='flex  gap-1 flex-col'>
-                                        <span className='oldPrice line-through leading-3text-gray-500 text-[15px] font-[500]'>
-                                            ₹500</span>
-                                        <span className='Price text-[#ff5252] text-[14px] font-[600]'>
-                                            ₹300</span>
-                                    </div>
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    <p className='text-[14px]'>
-                                        <span className='font-[600]'>235</span>sale</p>
-                                    <Progress value={40} type="warning" />
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    <div className='flex items-center gap-1'>
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <RiEditLine className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <FaRegEye className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <FaRegTrashCan className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-                                    </div>
-
-                                </td>
-                            </tr>
-
-                            <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50
-               even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200'>
-                                <td className='!px-6 !py-2 !pr-2'>
-                                    <div className='w-[60px]'>
-                                        <Checkbox {...label} />
-                                    </div>
-                                </td>
-
-                                <td className='!px-0 !py-2'>
-                                    <div className='flex items-center gap-4 w-[300px]'>
-                                        <div className='img w-[65px] h-[65px] rounded-md overflow-hidden group'>
-                                            <Link to='/product/4343'>
-                                                <img src="https://media.istockphoto.com/id/177537480/photo/gold-wheat-field-and-blue-sky.jpg?s=612x612&w=0&k=20&c=CAxLzTeCt4qBn7fifuoOh70ycoHr9w7FyeNVzkde_IM="
-                                                    className='w-full group-hover:scale-105 transition-all' />
-                                            </Link>
-                                        </div>
-
-
-                                        <div className='info w-[75%]'>
-                                            <h3 className='font-[600] text-[12px] leading-4 hover:text-[#3872fa]'>
-                                                <Link to='/product/4343'>
-                                                    Wheat Plant Stock Photos, Pictures & Images
-                                                </Link>
-                                            </h3>
-
-                                            <span className='text-[12px]'> Wheat </span>
-
-
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td className='!px-6 !py-2'>
-                                    Millets
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    Barnyard Millet
-                                </td>
-
-                                <td className='!px-6 !py-2'>
-                                    <div className='flex  gap-1 flex-col'>
-                                        <span className='oldPrice line-through leading-3text-gray-500 text-[15px] font-[500]'>
-                                            ₹500</span>
-                                        <span className='Price text-[#ff5252] text-[14px] font-[600]'>
-                                            ₹300</span>
-                                    </div>
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    <p className='text-[14px]'>
-                                        <span className='font-[600]'>235</span>sale</p>
-                                    <Progress value={40} type="warning" />
-                                </td>
-                                <td className='!px-6 !py-2'>
-                                    <div className='flex items-center gap-1'>
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <RiEditLine className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <FaRegEye className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-
-                                        <Button className='!w-[35px] !h-[35px] !min-w-[35px] !bg-[#f1f1f1]  
-                  !border-[rgba(0,0,0,0.1)] !rounded-full hover:!bg-[#ccc]'>
-                                            <FaRegTrashCan className='text-[rgba(0,0,0,0.7)] text-[20px]' />
-                                        </Button>
-                                    </div>
-
-                                </td>
-                            </tr>
-
-
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
                         </tbody>
                     </table>
                 </div>

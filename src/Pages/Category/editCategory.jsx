@@ -1,8 +1,6 @@
 import { Button } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react'
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { IoIosClose } from "react-icons/io";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import UploadBox from '../../Components/UploadBox';
 import { editData, fetchDataFromApi } from '../../utils/api';
 import { MyContext } from '../../App';
@@ -133,12 +131,12 @@ const EditCategory = () => {
 
                     <h3 className='text-[18px] font-[500] !mb-1 text-black'>Category Image</h3>
 
-                    <div className='grid grid-cols-7 gap-4'>
+                    <div className='grid grid-cols-5 !gap-4'>
 
                         {
                             previews?.length !== 0 && previews?.map((image, index) => {
                                 return (
-                                    <div className='uploadBoxWrapper relative' key={index}>
+                                    <div className='uploadBoxWrapper relative h-[150px] w-[150px]' key={index}>
                                         {/* <span className='absolute w-[20px] h-[20px] rounded-full overflow-hidden 
                     bg-red-700 -top-[5px] -right-[5px] flex items-center justify-center z-50 cursor-pointer'
                                         >
@@ -147,18 +145,10 @@ const EditCategory = () => {
 
 
                                         <div className='uploadBox !p-0 rounded-md overflow-hidden border border-dashed
-                      border-[rgba(0,0,0,0.3)] h-[15px] w-[100%] bg-gray-100 cursor-pointer hover:bg-gray-200 
+                      border-[rgba(0,0,0,0.3)]  h-[150px] w-full   bg-gray-100 cursor-pointer hover:bg-gray-200 
                       hover:bg-gray-200 flex items-center justify-center flex-col relative'>
 
-                                            {/* <LazyLoadImage
-                        className='w-full h-full object-cover'
-                        alt={"image"}
-                        effect='blur'
-                        wrapperProps={{
-                          style: { transitionDelay: "1s" },
-                        }}
-                        src={image}
-                      /> */}
+                                        
 
                                             <img src={image} className="w-full h-full object-cover rounded-md" alt="preview" />
 

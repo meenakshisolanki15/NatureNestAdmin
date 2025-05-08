@@ -9,6 +9,7 @@ import SearchBox from '../../Components/SearchBox';
 import { MyContext } from '../../App';
 import { fetchDataFromApi } from '../../utils/api';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 
 

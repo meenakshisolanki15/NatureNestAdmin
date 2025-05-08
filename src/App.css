@@ -1,40 +1,134 @@
-body{font-family: "Montserrat", serif;}
-.MuiBadge-badge{background:  #fff !important;}
+body {
+    font-family: "Montserrat", serif;
+}
 
-.ReactCollapse--collapse{
+.MuiBadge-badge {
+    background: #fff !important;
+}
+
+.ReactCollapse--collapse {
     transition: height 300ms;
 }
 
-::-webkit-scrollbar{width: 10px !important ; height: 10px !important;}
-::-webkit-scrollbar-thumb{background: #ccc !important;}
+::-webkit-scrollbar {
+    width: 10px !important;
+    height: 10px !important;
+}
 
-.btn{padding: 8px 20px !important;}
-.btn svg{font-size: 20px;}
-.btn-blue{background: #3872fa !important; color: #fff !important; 
-padding: 8px 20px !important;}
-.btn-blue:hover{background: #0a4adf !important;}
-.btn-sm{padding: 6px 20px !important; font-size: 13px !important;}
+::-webkit-scrollbar-thumb {
+    background: #ccc !important;
+}
 
+.btn {
+    padding: 8px 20px !important;
+}
 
-a.active button{background: #e2e1e1 !important;}
+.btn svg {
+    font-size: 20px;
+}
 
-.MuiButton-icon svg{font-size: 30px !important;}
+.btn-blue {
+    background: #3872fa !important;
+    color: #fff !important;
+    padding: 8px 20px !important;
+}
 
-.css-rizt0-MuiTypography-root{font-size: 14px !important;}
+.btn-blue:hover {
+    background: #0a4adf !important;
+}
 
-.MuiAppBar-colorPrimary{background: #f1fff1 !important;}
-
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0; 
+.btn-sm {
+    padding: 6px 20px !important;
+    font-size: 13px !important;
 }
 
 
-.otpBox input{border: 1px solid rgba(0,0,0,0.3) !important;outline: none !important;
-    border-radius: 4px !important; }
-    .otpBox input:focus{border: 1px solid rgba(0,0,0,0.7) !important;}
-    .otpPage .container{height: 90vh; display: flex;}
-    
+a.active button {
+    background: #e2e1e1 !important;
+}
+
+.MuiButton-icon svg {
+    font-size: 30px !important;
+}
+
+.css-rizt0-MuiTypography-root {
+    font-size: 14px !important;
+}
+
+.MuiAppBar-colorPrimary {
+    background: #f1fff1 !important;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+
+.otpBox input {
+    border: 1px solid rgba(0, 0, 0, 0.3) !important;
+    outline: none !important;
+    border-radius: 4px !important;
+}
+
+.otpBox input:focus {
+    border: 1px solid rgba(0, 0, 0, 0.7) !important;
+}
+
+.otpPage .container {
+    height: 90vh;
+    display: flex;
+}
+
+.uploadBoxWrapper img {
+    width: 200px;   /* Or any desired width */
+    height: 150px;  /* Or any desired height */
+    object-fit: cover; /* Ensures the image fills the space nicely */
+    border-radius: 8px; /* Optional: keeps the rounded corners */
+  }
+  
+.zoomProductSliderThumbs .swiper-wrapper {
+    padding-top: 38px !important;
+}
+.zoomProductSliderThumbs .swiper-slide{height: 80px !important; overflow: hidden; border-radius: 5px;}
+
+.zoomProductSliderThumbs .swiper-button-next {
+    bottom: 0px !important;
+    right: inherit !important;
+    top: inherit !important;
+    width: 100% !important;
+    height: 30px !important;
+    border-radius: 0px !important;
+}
+
+.zoomProductSliderThumbs .swiper-button-next::after {
+    transform: rotate(90deg);
+}
+
+.zoomProductSliderThumbs .swiper-button-prev {
+    top: 20px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 30px !important;
+    border-radius: 0px !important;
+}
+
+.zoomProductSliderThumbs .swiper-button-prev::after {
+    transform: rotate(90deg);
+}
+
+.swiper-slide .iiz{height: 400px !important; overflow: hidden !important;}
+
+.swiper-button-prev,.swiper-button-next{display: flex; 
+align-items: center; justify-content: center; 
+background: #52e60d; border-radius: 100%;
+width: 45px; height: 45px; min-width: 45px; box-shadow: 0 1px 3px #0000001f, 0 1px 2px #0000003d !important;}
+
+.swiper-button-prev::after,.swiper-button-next::after{font-size: 22px !important; color: #000;}
+
+.smlBtn .swiper-button-prev, .smlBtn .swiper-button-next{width: 30px !important; 
+height: 30px !important; min-width: 30px !important;}
+.mySwiper{overflow: inherit !important;}

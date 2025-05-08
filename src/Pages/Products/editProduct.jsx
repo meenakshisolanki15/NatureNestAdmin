@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { Button, Rating } from '@mui/material';
@@ -6,11 +6,11 @@ import { MyContext } from '../../App';
 import { FaCloudUploadAlt } from "react-icons/fa";
 import UploadBox from '../../Components/UploadBox';
 import CircularProgress from '@mui/material/CircularProgress';
-import { postData } from '../../utils/api';
+import { editData, fetchDataFromApi } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 
 
-const AddProduct = () => {
+const EditProduct = () => {
 
     const context = useContext(MyContext);
     const [isLoading, setIsLoading] = useState(false);
@@ -34,8 +34,40 @@ const AddProduct = () => {
 
     const [productCat, setProductCat] = useState('');
 
+    useEffect(()=>{
+        fetchDataFromApi(`/api/product/${context?.isOpenFullScreenPanel?.id}`).then((res)=>{
+            console.log(res?.product)
+            setFormFields({
+                name: res?.product?.name,
+                discription: res?.product?.description,
+                images: res?.product?.images,
+                price: res?.product?.price,
+                oldPrice: res?.product?.oldPrice,
+                catName: res?.product?.catName,
+                catId: res?.product?.catId,
+                discount: res?.product?.discount,
+                rating: res?.product?.rating,
 
 
+            })
+            //setProductCat(res?.product?.catId);
+            // setFormFields(prev => ({
+            //     ...prev,
+            //     name: res?.category?.name,
+            //     discription: res?.product?.description,
+            //     price: res?.product?.price,
+            //     oldPrice: res?.product?.oldPrice,
+            //     catName: res?.product?.catName,
+            //     catId: res?.product?.catId,
+            //     discount: res?.product?.discount,
+            //     rating: res?.product?.rating,
+            // }));
+            // // formFields.name=res?.category?.name
+            // setPreviews(res?.category?.images)
+
+            
+        })
+    }, []);
 
     const handleChangeProductCat = (event) => {
         setProductCat(event.target.value);
@@ -71,12 +103,12 @@ const AddProduct = () => {
     const handleSubmit = (e) => {
         e.preventDefault(0);
         setIsLoading(true);
-        if (formFields.name === "") {
+        if(formFields.name === ""){
             context.openAlertBox("error", "Please enter product name");
             setIsLoading(false);
             return false;
         }
-        if (formFields.description === "") {
+        if(formFields.description === ""){
             context.openAlertBox("error", "Please enter product description");
             setIsLoading(false);
             return false;
@@ -86,38 +118,38 @@ const AddProduct = () => {
         //     setIsLoading(false);
         //     return false;
         // }
-        if (formFields.price === "") {
+        if(formFields.price === ""){
             context.openAlertBox("error", "Please enter product Price");
             setIsLoading(false);
             return false;
         }
-        if (formFields.oldPrice === "") {
+        if(formFields.oldPrice === ""){
             context.openAlertBox("error", "Please enter product Old Price");
             setIsLoading(false);
             return false;
         }
-        if (formFields.discount === "") {
+        if(formFields.discount === ""){
             context.openAlertBox("error", "Please enter product discount");
             setIsLoading(false);
             return false;
-
+            
         }
-        if (formFields.rating === "") {
+        if(formFields.rating === ""){
             context.openAlertBox("error", "Please select rating");
             setIsLoading(false);
             return false;
-
+            
         }
-
-        if (previews?.length === 0) {
+       
+        if(previews?.length === 0){
             context.openAlertBox("error", "Please upload product image");
             setIsLoading(false);
             return false;
         }
-        postData("/api/product/create", formFields).then((res) => {
+        editData(`/api/product/updateProduct/${context?.isOpenFullScreenPanel?.id}`, formFields).then((res) => {
             console.log(res)
-            if (res?.error === false) {
-                context.openAlertBox("success", res?.message);
+            if (res?.data.error === false) {
+                context.openAlertBox("success", res?.data?.message);
                 setTimeout(() => {
                     setIsLoading(false);
                     context.setIsOpenFullScreenPanel({
@@ -125,15 +157,15 @@ const AddProduct = () => {
                     })
                     history("/products");
                 }, 1000);
-            } else {
-                context.openAlertBox("error", res?.message);
-                setIsLoading(false);
+            }else{
+                context.openAlertBox("error", res?.data?.message);
+                setIsLoading(false); 
             }
         })
 
     }
     return (
-        <section className='!p-5 '>
+        <section className='!p-5'>
             <form className='form' onSubmit={handleSubmit}>
                 <div className='grid grid-cols-1 !mb-3'>
                     <div className='col'>
@@ -174,9 +206,9 @@ const AddProduct = () => {
                                 onChange={handleChangeProductCat}
                             >
                                 {
-                                    context?.catData?.map((cat) => {
+                                    context?.catData?.map((cat,index) => {
                                         return (
-                                            <MenuItem value={cat?._id}
+                                            <MenuItem value={cat?._id} key={index}
                                                 onClick={() => selectCatByName(cat?.name)}>
                                                 {cat?.name}
                                             </MenuItem>
@@ -224,30 +256,29 @@ const AddProduct = () => {
                         <h3 className='text-[14px] font-[500] !mb-1 text-black'>
                             Product Rating
                         </h3>
-                        <Rating name="half-rating" defaultValue={1} precision={0.5}
+                        <Rating name="rating" value={formFields.rating} 
                             onChange={onChangeRating} />
                     </div>
 
-                   
+                  
 
 
 
                 </div>
-
-                <div className='col w-full !p-2 !px-0'>
+                <div className='col w-full !p-5 !px-0'>
                         <h3 className='font-[700] text-[18px] !mb-3'>Media & Images </h3>
-                        <div className='grid grid-cols-5 gap-3'>
+                        <div className='grid grid-cols-7 gap-4'>
 
                             {
                                 previews?.length !== 0 && previews?.map((image, index) => {
                                     return (
-                                        <div className='uploadBoxWrapper relative h-[150px] w-[150px] ' key={index}>
+                                        <div className='uploadBoxWrapper relative h-[150px] w-[150px]' key={index}>
 
                                             <div className='uploadBox !p-0 rounded-md overflow-hidden border border-dashed
-                                                border-[rgba(0,0,0,0.3)]  h-[150px] w-full bg-gray-100 cursor-pointer hover:bg-gray-200 
+                                                border-[rgba(0,0,0,0.3)] h-[150px] w-full  bg-gray-100 cursor-pointer hover:bg-gray-200 
                                                 hover:bg-gray-200 flex items-center justify-center flex-col relative'>
 
-                                                <img src={image} className="w-full h-full object-cover rounded-md" alt="preview" />
+                                                <img src={image} className="w-full h-full object-cover rounded-md" alt="preview"  />
 
                                             </div>
 
@@ -259,26 +290,20 @@ const AddProduct = () => {
                             }
 
 
-                            {/* <UploadBox multiple={true} name="images" url="/api/product/uploadImages"
-                                setPreviews={setPreviews} /> */}
-                            <UploadBox
+                            <UploadBox multiple={true} name="images" url="/api/product/uploadImages"
+                                setPreviews={setPreviews} />
+                            {/* <UploadBox
                                 multiple={true}
                                 name="images"
                                 url="/api/product/uploadImages"
-                                setPreviews={(newPreviews) => {
-                                    setPreviews((prev) => {
-                                        const combined = [...prev, ...newPreviews];
-                                        return combined.slice(0, 5); // Only keep first 5 images
-                                    });
-                                }}
+                                setPreviews={setPreviews}
                                 onUploadSuccess={(uploadedUrls) => {
                                     setFormFields((prev) => ({
                                         ...prev,
-                                        images: uploadedUrls.slice(0, 5), // Also limit in form data
+                                        images: uploadedUrls, // Save image URLs to be sent in the API call
                                     }));
                                 }}
-                            />
-
+                            /> */}
 
                         </div>
                     </div>
@@ -305,4 +330,4 @@ const AddProduct = () => {
     )
 }
 
-export default AddProduct;
+export default EditProduct;

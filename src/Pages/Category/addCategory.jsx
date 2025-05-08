@@ -5,12 +5,15 @@ import UploadBox from '../../Components/UploadBox';
 import { postData } from '../../utils/api';
 import { MyContext } from '../../App';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const AddCategory = () => {
 
   const context = useContext(MyContext);
+
+  const history = useNavigate();
 
   const [formFields, setFormFields] = useState({
     name: "",
@@ -81,6 +84,8 @@ const AddCategory = () => {
         context.setIsOpenFullScreenPanel({
           open: false,
         })
+        context?.getCat();
+        history("/category/list")
       }, 2500);
     })
   }

@@ -35,12 +35,27 @@ const UploadBox = (props) => {
                 }
             }
 
+            // uploadImages(apiEndPoint, formdata).then((res) => {
+            //     setUploading(false);
+
+            //     props.setPreviews(res?.data?.images);
+                
+            // })
+
             uploadImages(apiEndPoint, formdata).then((res) => {
                 setUploading(false);
-
-                props.setPreviews(res?.data?.images);
-                
-            })
+            
+                const uploadedImages = res?.data?.images || [];
+            
+                // Update local previews
+                props.setPreviews(uploadedImages);
+            
+                // Notify parent component
+                if (props.onUploadSuccess) {
+                    props.onUploadSuccess(uploadedImages); // Pass uploaded image URLs to parent
+                }
+            });
+            
         } catch (error) {
             console.log(error);
         }
