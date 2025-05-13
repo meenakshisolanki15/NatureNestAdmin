@@ -19,8 +19,6 @@ import ProductDetails from './Pages/Products/productDetails';
 
 
 
-
-
 const MyContext = createContext();
 function App() {
 
@@ -28,6 +26,7 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
 
   const [catData, setCatData] = useState([]);
+  const [productData, setProductData] = useState([]);
 
   const [isOpenFullScreenPanel, setIsOpenFullScreenPanel] = useState(
     {
@@ -209,7 +208,7 @@ function App() {
       </>
       ),
     },
-
+ 
 
 
   ]);
@@ -225,6 +224,8 @@ function App() {
     openAlertBox,
     catData,
     setCatData,
+    productData,
+    setProductData,
     
   };
 

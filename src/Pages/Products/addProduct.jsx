@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+
 import { Button, Rating } from '@mui/material';
 import { MyContext } from '../../App';
 import { FaCloudUploadAlt } from "react-icons/fa";
@@ -32,22 +31,22 @@ const AddProduct = () => {
 
     })
 
-    const [productCat, setProductCat] = useState('');
+    // const [productCat, setProductCat] = useState('');
 
 
 
 
-    const handleChangeProductCat = (event) => {
-        setProductCat(event.target.value);
-        formFields.catId = event.target.value
-        //formFields.category = event.target.value
-    }
+    // const handleChangeProductCat = (event) => {
+    //     setProductCat(event.target.value);
+    //     formFields.catId = event.target.value
+    //     //formFields.category = event.target.value
+    // }
 
-    const selectCatByName = (name) => {
-        formFields.catName = name
+    // const selectCatByName = (name) => {
+    //     formFields.catName = name
 
 
-    }
+    // }
     const onChangeInput = (e) => {
         const { name, value } = e.target;
         setFormFields(() => {
@@ -159,7 +158,7 @@ const AddProduct = () => {
                     </div>
                 </div>
                 <div className='grid grid-cols-4 !mb-3 gap-4'>
-                    <div className='col'>
+                    {/* <div className='col'>
                         <h3 className='text-[14px] font-[500] !mb-1'>Product Category</h3>
 
                         {
@@ -188,7 +187,7 @@ const AddProduct = () => {
                             </Select>
 
                         }
-                    </div>
+                    </div> */}
 
                     <div className='col'>
                         <h3 className='text-[14px] font-[500] !mb-1 text-black'>Product Price</h3>

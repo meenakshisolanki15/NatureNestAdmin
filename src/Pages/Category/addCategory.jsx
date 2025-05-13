@@ -77,7 +77,7 @@ const AddCategory = () => {
       return false
     }
     postData("/api/category/create", formFields).then((res) => {
-      console.log(res)
+      //console.log(res)
 
       setTimeout(() => {
         setIsLoading(false)

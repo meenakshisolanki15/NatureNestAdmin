@@ -26,6 +26,7 @@ import EditCategory from '../../Pages/Category/editCategory';
 import AddCategory from '../../Pages/Category/addCategory';
 import EditProduct from '../../Pages/Products/editProduct';
 
+
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
     right: -3,
@@ -217,6 +218,7 @@ const Header = () => {
         {
           context?.isOpenFullScreenPanel?.model === "Add Product" && <AddProduct />
         }
+        
         {
           context?.isOpenFullScreenPanel?.model === "Add Home Slide" && <AddHomeSlide />
         }
@@ -229,6 +231,7 @@ const Header = () => {
          {
           context?.isOpenFullScreenPanel?.model === "Edit Product" && <EditProduct />
         }
+        
       </Dialog>
 
     </>

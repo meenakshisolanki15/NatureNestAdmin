@@ -54,7 +54,7 @@ const Sidebar = () => {
           </li>
           <li>
 
-            <Button className='w-full !capitalize !justify-start flex gap-3 !text-[14px] 
+            {/* <Button className='w-full !capitalize !justify-start flex gap-3 !text-[14px] 
           !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]'
               onClick={() => isOpenSubMenu(1)}>
               <FaRegImage className='text-[20px] ' />
@@ -64,7 +64,7 @@ const Sidebar = () => {
               >
                 <FaAngleDown className={`transition-all ${submenuIndex === 1 ? 'rotate-180' : ''}`} />
               </span>
-            </Button>
+            </Button> */}
 
 
             <Collapse isOpened={submenuIndex === 1 ? true : false}>
@@ -98,7 +98,7 @@ const Sidebar = () => {
           <li>
 
             <Button className='w-full !capitalize !justify-start flex gap-3 !text-[14px] 
-          !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]'
+             !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]'
               onClick={() => isOpenSubMenu(2)}>
               <RiProductHuntLine className='text-[20px] ' />
               <span>Products</span>
@@ -122,15 +122,8 @@ const Sidebar = () => {
                     </Button>
                   </Link>
                 </li>
-                <li className='w-full'>
-                  <Link to="/product/upload">
-                    <Button className='!text-[rgba(0,0,0,0.7)] !capitalize !justify-start
-               !w-full !text-[13px] !font-[500] !pl-9 flex gap-3'>
-                      <span className='block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]'></span>
-                      Product Upload
-                    </Button>
-                  </Link>
-                </li>
+                
+                 
               </ul>
             </Collapse>
           </li>

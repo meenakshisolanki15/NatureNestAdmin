@@ -31,7 +31,7 @@ const EditCategory = () => {
         const id = context?.isOpenFullScreenPanel?.id;
         if (!id) return; // guard against undefined
         fetchDataFromApi(`/api/category/${id}`).then((res) => {
-            console.log(res?.category);
+            //console.log(res?.category);
             setFormFields(prev => ({
                 ...prev,
                 name: res?.category?.name || ''
@@ -145,11 +145,8 @@ const EditCategory = () => {
 
 
                                         <div className='uploadBox !p-0 rounded-md overflow-hidden border border-dashed
-                      border-[rgba(0,0,0,0.3)]  h-[150px] w-full   bg-gray-100 cursor-pointer hover:bg-gray-200 
-                      hover:bg-gray-200 flex items-center justify-center flex-col relative'>
-
-                                        
-
+                                            border-[rgba(0,0,0,0.3)]  h-[150px] w-full   bg-gray-100 cursor-pointer hover:bg-gray-200 
+                                            hover:bg-gray-200 flex items-center justify-center flex-col relative'>
                                             <img src={image} className="w-full h-full object-cover rounded-md" alt="preview" />
 
 
